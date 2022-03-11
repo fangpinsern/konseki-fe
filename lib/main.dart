@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/history.dart';
 import 'package:konseki_app/pages/home.dart';
+import 'package:konseki_app/pages/qr_scanner.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,6 +111,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var bottomNavBar = BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      elevation: 20,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.code),
+          label: 'Code',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history),
+          label: 'History',
+        ),
+      ],
+    );
+
     List<Widget> _pages = <Widget>[
       Container(
         margin: EdgeInsets.symmetric(
@@ -121,9 +142,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      Icon(
-        Icons.code,
-        size: 150,
+      Container(
+        padding: EdgeInsets.zero,
+        margin: EdgeInsets.zero,
+        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        child: QRScanner(
+          height: (MediaQuery.of(context).size.height -
+                  kBottomNavigationBarHeight -
+                  280) /
+              2,
+          width: (MediaQuery.of(context).size.width - 280) / 2,
+        ),
       ),
       Container(
         margin: EdgeInsets.symmetric(
@@ -138,29 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
+          height: MediaQuery.of(context).size.height,
           child: _pages.elementAt(_selectedIndex),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        elevation: 20,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.code),
-            label: 'Code',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavBar,
       // floatingActionButton: FloatingActionButton(
       //   onPressed: _incrementCounter,
       //   tooltip: 'Increment',
