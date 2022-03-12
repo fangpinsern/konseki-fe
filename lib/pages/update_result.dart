@@ -67,7 +67,7 @@ class _UpdateResultState extends State<UpdateResult> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => MyHomePage(
-                    title: "",
+                    index: 0,
                   ),
                 ));
               },

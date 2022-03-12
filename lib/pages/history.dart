@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/widgets/history/event_list.dart';
-import 'package:konseki_app/widgets/history/sections.dart';
 
 class History extends StatefulWidget {
   final List<HistoryInfo> history;

@@ -14,5 +14,6 @@ class Event {
   final String title;
   final int pax;
   final DateTime date;
-  Event(this.title, this.pax, this.date);
+  final String link;
+  Event(this.title, this.pax, this.date, this.link);
 }

@@ -23,15 +23,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(
+        index: 0,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.index}) : super(key: key);
 
-  final String title;
+  int index = 0;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -39,66 +41,35 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  var firstBuild = true;
 
   final historyInfo = [
     HistoryInfo(
       date: DateTime.now(),
       events: [
-        Event(
-          "History Project",
-          5,
-          DateTime.now(),
-        ),
-        Event(
-          "Lunch @ Poke Theory",
-          2,
-          DateTime.now(),
-        ),
+        Event("History Project", 5, DateTime.now(), "https://google.com"),
+        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
       ],
     ),
     HistoryInfo(
       date: DateTime.now(),
       events: [
-        Event(
-          "History Project",
-          5,
-          DateTime.now(),
-        ),
-        Event(
-          "Lunch @ Poke Theory",
-          2,
-          DateTime.now(),
-        ),
+        Event("History Project", 5, DateTime.now(), "https://google.com"),
+        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
       ],
     ),
     HistoryInfo(
       date: DateTime.now(),
       events: [
-        Event(
-          "History Project",
-          5,
-          DateTime.now(),
-        ),
-        Event(
-          "Lunch @ Poke Theory",
-          2,
-          DateTime.now(),
-        ),
+        Event("History Project", 5, DateTime.now(), "https://google.com"),
+        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
       ],
     ),
     HistoryInfo(
       date: DateTime.now(),
       events: [
-        Event(
-          "History Project",
-          5,
-          DateTime.now(),
-        ),
-        Event(
-          "Lunch @ Poke Theory",
-          2,
-          DateTime.now(),
-        ),
+        Event("History Project", 5, DateTime.now(), "https://google.com"),
+        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
       ],
     )
   ];
@@ -111,6 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (firstBuild) {
+      _selectedIndex = widget.index;
+      firstBuild = false;
+    }
+
     var bottomNavBar = BottomNavigationBar(
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
@@ -162,9 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: Center(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -172,11 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: bottomNavBar,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }

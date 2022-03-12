@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
+import 'package:konseki_app/pages/qr_page.dart';
 
 class EventList extends StatelessWidget {
   final List<Event> events;
@@ -12,12 +11,13 @@ class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width * 0.9,
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.all(5),
             decoration: const BoxDecoration(
                 border: Border(
@@ -34,14 +34,11 @@ class EventList extends StatelessWidget {
           ),
           ...events.map((val) {
             return Container(
-              margin: EdgeInsets.all(0),
+              margin: EdgeInsets.all(10),
               child: Row(children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  padding: const EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width * 0.9 * 0.2,
+                  // padding: const EdgeInsets.all(10),
                   child: Text(
                     DateFormat("jm").format(val.date),
                     style: const TextStyle(
@@ -49,23 +46,41 @@ class EventList extends StatelessWidget {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      val.title,
-                      style: const TextStyle(
-                        fontSize: 14,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9 * 0.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        val.title,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "${val.pax.toString()} pax",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
+                      Text(
+                        "${val.pax.toString()} pax",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9 * 0.1,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => QRPage(
+                                groupName: val.title,
+                                groupLink: "https://google.com",
+                              )));
+                    },
+                    icon: Icon(
+                      Icons.code,
                     ),
-                  ],
+                  ),
                 )
               ]),
             );

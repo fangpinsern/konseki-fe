@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:konseki_app/pages/qr_page.dart';
 
 class NewEvent extends StatefulWidget {
   const NewEvent({Key? key}) : super(key: key);
@@ -77,7 +78,13 @@ class _NewEventState extends State<NewEvent> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => QRPage(
+                            groupName: titleController.text,
+                            groupLink: "https://google.com",
+                          )));
+                },
                 child: Container(
                   width: 325,
                   height: 48,
