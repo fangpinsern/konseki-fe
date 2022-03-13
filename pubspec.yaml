@@ -63,6 +63,11 @@ flutter:
   assets:
     - assets/icons/test_icon.png
     - assets/icons/test_icon.svg
+    - assets/icons/check-illustration.png
+    - assets/icons/qr-icon.svg
+    - assets/icons/qr-icon.png
+    - assets/icons/testkit-icon.svg
+    - assets/icons/testkit-illustration.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

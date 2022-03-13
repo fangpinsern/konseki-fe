@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:konseki_app/pages/update_result.dart';
 
 class UpdateResultButton extends StatelessWidget {
@@ -8,7 +9,6 @@ class UpdateResultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("tapped");
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => UpdateResult()));
         Feedback.forTap(context);
@@ -25,10 +25,10 @@ class UpdateResultButton extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.code,
-                size: 50,
+            children: [
+              SvgPicture.asset(
+                "assets/icons/testkit-icon.svg",
+                height: 60,
               ),
               SizedBox(
                 height: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konseki_app/pages/scan_success.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanner extends StatefulWidget {
@@ -11,6 +12,7 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
+  var val = "Text appear here";
   var backgroundC = Colors.grey.withOpacity(0.7);
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,16 @@ class _QRScannerState extends State<QRScanner> {
           onDetect: (barcode, args) {
             final String? code = barcode.rawValue;
             debugPrint('Barcode found! $code');
+            setState(() {
+              val = code!;
+            });
+            // on success, go to success page
+            // on failure, go to fail page
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ScanSuccess(val),
+              ),
+            );
           },
         ),
         Center(
@@ -57,10 +69,21 @@ class _QRScannerState extends State<QRScanner> {
               Text(
                 "Scan QR Code",
                 style: TextStyle(fontSize: 32),
-              )
+              ),
+              Text(val),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ScanSuccess(val),
+                    ),
+                  );
+                },
+                child: Text("To success"),
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

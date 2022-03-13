@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/history.dart';
@@ -96,10 +97,18 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(Icons.home),
           label: 'Home',
         ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.code),
+        //   label: 'Scan',
+        // ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.code),
-          label: 'Code',
+          icon: ImageIcon(AssetImage("assets/icons/qr-icon.png")),
+          label: 'Scan',
         ),
+        // BottomNavigationBarItem(
+        //   icon: Container(child: SvgPicture.asset("assets/icons/qr-icon.svg")),
+        //   label: 'Scan',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
           label: 'History',
