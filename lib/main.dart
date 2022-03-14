@@ -3,9 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
+import 'package:konseki_app/pages/auth.dart';
 import 'package:konseki_app/pages/history.dart';
 import 'package:konseki_app/pages/home.dart';
 import 'package:konseki_app/pages/qr_scanner.dart';
+import 'package:konseki_app/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,14 +22,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(
-        index: 0,
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        )
+      ],
+      child: Consumer<Auth>(builder: (context, auth, _) {
+        print("building");
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: auth.isAuth
+              ? MyHomePage(
+                  index: 0,
+                )
+              : AuthScreen(),
+          routes: {
+            '/home': (context) => MyHomePage(index: 0),
+            '/qr-scan': (context) => MyHomePage(index: 1),
+            '/history': (context) => MyHomePage(index: 2),
+          },
+        );
+      }),
     );
   }
 }

@@ -144,7 +144,7 @@ class _UpdateResultState extends State<UpdateResult> {
                         });
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7 * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.9 * 0.3,
                         height: 48,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -174,7 +174,7 @@ class _UpdateResultState extends State<UpdateResult> {
                         });
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7 * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.9 * 0.3,
                         height: 48,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
