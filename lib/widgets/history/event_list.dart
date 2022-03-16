@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/qr_page.dart';
@@ -77,9 +78,7 @@ class EventList extends StatelessWidget {
                                 groupLink: "https://google.com",
                               )));
                     },
-                    icon: Icon(
-                      Icons.code,
-                    ),
+                    icon: SvgPicture.asset("assets/icons/qr-icon.svg"),
                   ),
                 )
               ]),

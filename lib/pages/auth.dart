@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konseki_app/main.dart';
+import 'package:konseki_app/models/http_exceptions.dart';
 import 'package:konseki_app/providers/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -59,32 +60,70 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
 
-  void _submit() {
+  Future<void> _submit() async {
+    print("clciked");
     if (!_formKey.currentState!.validate()) {
       // Invalid!
-      return;
+      // return;
+      print("somethign wrong");
     }
     _formKey.currentState!.save();
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    if (_authMode == AuthMode.Login) {
-      Provider.of<Auth>(context, listen: false).login(
-        _authData['email']!,
-        _authData['password']!,
-      );
-    } else {
-      Provider.of<Auth>(context, listen: false).register(
-        _authData['name']!,
-        _authData['email']!,
-        _authData['password']!,
-      );
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      if (_authMode == AuthMode.Login) {
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      } else {
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['name']!,
+          _authData['email']!,
+          _authData['password']!,
+        );
+      }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains("EMAIL_EXISTS")) {
+        errorMessage = 'This email address is already used';
+      } else if (error.toString().contains("INVALID_EMAIL")) {
+        errorMessage = 'Email address is not valid';
+      } else if (error.toString().contains("WEAK_PASSWORD")) {
+        errorMessage = 'Use a stronger password';
+      } else if (error.toString().contains("EMAIL_NOT_FOUND")) {
+        errorMessage = 'Cannot find user with this email';
+      } else if (error.toString().contains("INVALID_PASSWORD")) {
+        errorMessage = 'Invalid email or password';
+      } else {
+        errorMessage = 'something went wrong';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      var errorMessage = 'Could not authenticate. Please try again later';
+      _showErrorDialog(errorMessage);
     }
     setState(() {
       _isLoading = false;
     });
+  }
 
-    Navigator.of(context).pushReplacementNamed("/home");
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Okay"))
+        ],
+      ),
+    );
   }
 
   void _switchAuthMode() {
@@ -133,7 +172,7 @@ class _AuthCardState extends State<AuthCard> {
                       if (val == null) {
                         return;
                       }
-                      _authData['email'] = val;
+                      _authData['name'] = val;
                     },
                   ),
                 TextFormField(
