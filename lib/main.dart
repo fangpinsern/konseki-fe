@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/auth.dart';
 import 'package:konseki_app/pages/history.dart';
@@ -9,6 +7,7 @@ import 'package:konseki_app/pages/home.dart';
 import 'package:konseki_app/pages/qr_scanner.dart';
 import 'package:konseki_app/pages/splash_screen.dart';
 import 'package:konseki_app/providers/auth.dart';
+import 'package:konseki_app/providers/event.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -27,7 +26,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: Auth(),
-        )
+        ),
+        ChangeNotifierProxyProvider<Auth, Events>(
+          create: (context) => Events("", []),
+          update: (ctx, auth, previousEvents) => Events(auth.token,
+              previousEvents == null ? [] : previousEvents.historyInfo),
+        ),
       ],
       child: Consumer<Auth>(
         builder: (context, auth, _) {
@@ -73,36 +77,36 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   var firstBuild = true;
 
-  final historyInfo = [
-    HistoryInfo(
-      date: DateTime.now(),
-      events: [
-        Event("History Project", 5, DateTime.now(), "https://google.com"),
-        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-      ],
-    ),
-    HistoryInfo(
-      date: DateTime.now(),
-      events: [
-        Event("History Project", 5, DateTime.now(), "https://google.com"),
-        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-      ],
-    ),
-    HistoryInfo(
-      date: DateTime.now(),
-      events: [
-        Event("History Project", 5, DateTime.now(), "https://google.com"),
-        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-      ],
-    ),
-    HistoryInfo(
-      date: DateTime.now(),
-      events: [
-        Event("History Project", 5, DateTime.now(), "https://google.com"),
-        Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-      ],
-    )
-  ];
+  // final historyInfo = [
+  //   HistoryInfo(
+  //     date: DateTime.now(),
+  //     events: [
+  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
+  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
+  //     ],
+  //   ),
+  //   HistoryInfo(
+  //     date: DateTime.now(),
+  //     events: [
+  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
+  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
+  //     ],
+  //   ),
+  //   HistoryInfo(
+  //     date: DateTime.now(),
+  //     events: [
+  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
+  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
+  //     ],
+  //   ),
+  //   HistoryInfo(
+  //     date: DateTime.now(),
+  //     events: [
+  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
+  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
+  //     ],
+  //   )
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -171,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Container(
         margin: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.1),
-        child: History(historyInfo),
+        child: History(),
       ),
     ];
 

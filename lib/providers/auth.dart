@@ -23,7 +23,7 @@ class Auth with ChangeNotifier {
 
   String get token {
     if (_expiryDate.isAfter(DateTime.now()) && _idtoken != "") {
-      return token;
+      return _idtoken;
     }
     return "";
   }
@@ -92,7 +92,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    return await _authenticate(email, password, "", "signInWithPassword");
+    return _authenticate(email, password, "", "signInWithPassword");
   }
 
   Future<bool> tryAutoLogin() async {
