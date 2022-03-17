@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/qr_page.dart';
+import 'package:konseki_app/providers/event.dart';
+import 'package:provider/provider.dart';
 
 class NewEvent extends StatefulWidget {
   const NewEvent({Key? key}) : super(key: key);
@@ -11,6 +14,13 @@ class NewEvent extends StatefulWidget {
 
 class _NewEventState extends State<NewEvent> {
   final titleController = TextEditingController();
+
+  Future<QRInfo> _submit() async {
+    var res = await Provider.of<Events>(context, listen: false)
+        .CreateEvent(titleController.text);
+    return QRInfo(res.title, res.link);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,11 +88,14 @@ class _NewEventState extends State<NewEvent> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  // check if api success
+                  // use the return value
+                  var result = await _submit();
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QRPage(
-                            groupName: titleController.text,
-                            groupLink: "https://google.com",
+                            groupName: result.title,
+                            groupLink: "https://google.com${result.link}",
                           )));
                 },
                 child: Container(

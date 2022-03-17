@@ -12,9 +12,36 @@ class Events with ChangeNotifier {
   List<HistoryInfo> historyInfo = [];
   String token;
 
+  final String _backendURL = '10.0.2.2:8080';
+
   Events(this.token, this.historyInfo);
+// class Event {
+//   final String title;
+//   final int pax;
+//   final DateTime date;
+//   final String link;
+//   Event(this.title, this.pax, this.date, this.link);
+// }
+  Future<QRInfo> CreateEvent(String eventName) async {
+    var url = Uri.http(_backendURL, "/event/create");
+    try {
+      var response = await http.post(url,
+          body: json.encode({
+            "name": eventName,
+          }),
+          headers: {"Authorization": "Bearer $token"});
+
+      final responseData = json.decode(response.body);
+      print(responseData);
+      final newEvent = QRInfo(responseData['name'], responseData['id']);
+      return newEvent;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   Future<void> GetEvents() async {
-    var url = Uri.http('10.0.2.2:8080', "/event/all");
+    var url = Uri.http(_backendURL, "/event/all");
     try {
       var response = await http.get(
         url,

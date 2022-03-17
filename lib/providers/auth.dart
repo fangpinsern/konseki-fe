@@ -13,8 +13,10 @@ class Auth with ChangeNotifier {
   String _refreshToken = "";
   DateTime _expiryDate = DateTime.now();
   String _localId = "";
+  String _name = "";
 
   final String _APIKey = "AIzaSyDdRiul6T45MvsKtKcMMbqfdxnc-zxpKlU";
+  final String backendURL = '10.0.2.2:8080';
 
   bool get isAuth {
     print("this is $_idtoken");
@@ -24,6 +26,13 @@ class Auth with ChangeNotifier {
   String get token {
     if (_expiryDate.isAfter(DateTime.now()) && _idtoken != "") {
       return _idtoken;
+    }
+    return "";
+  }
+
+  String get name {
+    if (_name != "") {
+      return _name;
     }
     return "";
   }
@@ -57,7 +66,7 @@ class Auth with ChangeNotifier {
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
 
       if (urlSegment == "signUp") {
-        var url1 = Uri.http('10.0.2.2:8080', "/register");
+        var url1 = Uri.http(backendURL, "/register");
         var response1 = await http.post(
           url1,
           headers: {
@@ -69,9 +78,24 @@ class Auth with ChangeNotifier {
             },
           ),
         );
+
         final responseData1 = json.decode(response1.body);
         print(responseData1);
       }
+
+      var url2 = Uri.http(backendURL, "/profile");
+      var response2 = await http.get(
+        url2,
+        headers: {
+          "Authorization": "Bearer $_idtoken",
+        },
+      );
+
+      final profileData = json.decode(response2.body);
+      print(profileData);
+
+      _name = profileData['name'];
+
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode({
@@ -80,6 +104,7 @@ class Auth with ChangeNotifier {
         'email': _email,
         'refreshToken': _refreshToken,
         'expiryDate': _expiryDate.toIso8601String(),
+        'name': _name,
       });
       prefs.setString('userData', userData);
     } catch (err) {
@@ -113,6 +138,9 @@ class Auth with ChangeNotifier {
     _email = extractedUserData['email'];
     _refreshToken = extractedUserData['refreshToken'];
     _expiryDate = expiryDate;
+    _name = extractedUserData['name'];
+
+    // prefs.remove('userData');
 
     notifyListeners();
     // print("iamhere");

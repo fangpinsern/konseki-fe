@@ -7,7 +7,13 @@ class HistoryInfo {
   HistoryInfo({
     required this.date,
     required this.events,
-  });
+  }) {
+    events.sort((a, b) {
+      final aDate = a.date;
+      final bDate = b.date;
+      return bDate.compareTo(aDate);
+    });
+  }
 }
 
 class Event {
@@ -16,4 +22,10 @@ class Event {
   final DateTime date;
   final String link;
   Event(this.title, this.pax, this.date, this.link);
+}
+
+class QRInfo {
+  final String title;
+  final String link;
+  QRInfo(this.title, this.link);
 }
