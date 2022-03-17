@@ -4,10 +4,11 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class QRPage extends StatefulWidget {
   final groupName;
-  final groupLink;
+  var groupLink;
 
-  const QRPage({Key? key, required this.groupName, required this.groupLink})
-      : super(key: key);
+  QRPage({required this.groupName, required eventId}) {
+    this.groupLink = "https://google.com?eventId=$eventId";
+  }
 
   @override
   State<QRPage> createState() => _QRPageState();

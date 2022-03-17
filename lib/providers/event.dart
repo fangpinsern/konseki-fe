@@ -12,7 +12,7 @@ class Events with ChangeNotifier {
   List<HistoryInfo> historyInfo = [];
   String token;
 
-  final String _backendURL = '10.0.2.2:8080';
+  final String _backendURL = '172.17.75.6:8080';
 
   Events(this.token, this.historyInfo);
 // class Event {
@@ -35,6 +35,26 @@ class Events with ChangeNotifier {
       print(responseData);
       final newEvent = QRInfo(responseData['name'], responseData['id']);
       return newEvent;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  Future<JoinEventResponse> JoinEvent(String eventId) async {
+    var url = Uri.http(_backendURL, "/event/join");
+    try {
+      var response = await http.post(url,
+          body: json.encode({
+            "id": eventId,
+          }),
+          headers: {"Authorization": "Bearer $token"});
+
+      final responseData = json.decode(response.body);
+      print(responseData);
+      final sucessfullyJoin = JoinEventResponse(responseData['event_name'],
+          responseData['id'], responseData['is_success']);
+
+      return sucessfullyJoin;
     } catch (err) {
       throw err;
     }

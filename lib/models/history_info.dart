@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class HistoryInfo {
@@ -28,4 +30,11 @@ class QRInfo {
   final String title;
   final String link;
   QRInfo(this.title, this.link);
+}
+
+class JoinEventResponse {
+  final String title;
+  final String id;
+  final bool isSuccess;
+  JoinEventResponse(this.title, this.id, this.isSuccess);
 }

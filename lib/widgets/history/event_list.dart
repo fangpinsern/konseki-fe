@@ -75,7 +75,7 @@ class EventList extends StatelessWidget {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => QRPage(
                                 groupName: val.title,
-                                groupLink: "https://google.com/${val.link}",
+                                eventId: val.link,
                               )));
                     },
                     icon: SvgPicture.asset("assets/icons/qr-icon.svg"),

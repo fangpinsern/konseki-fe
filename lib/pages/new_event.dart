@@ -95,7 +95,7 @@ class _NewEventState extends State<NewEvent> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QRPage(
                             groupName: result.title,
-                            groupLink: "https://google.com${result.link}",
+                            eventId: result.link,
                           )));
                 },
                 child: Container(

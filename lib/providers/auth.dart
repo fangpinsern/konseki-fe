@@ -16,7 +16,7 @@ class Auth with ChangeNotifier {
   String _name = "";
 
   final String _APIKey = "AIzaSyDdRiul6T45MvsKtKcMMbqfdxnc-zxpKlU";
-  final String backendURL = '10.0.2.2:8080';
+  final String backendURL = '172.17.75.6:8080';
 
   bool get isAuth {
     print("this is $_idtoken");

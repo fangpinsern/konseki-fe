@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:konseki_app/pages/scan_success.dart';
+import 'package:konseki_app/providers/event.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
 
 class QRScanner extends StatefulWidget {
   final double height;
@@ -12,8 +14,32 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
-  var val = "Text appear here";
+  // var val = "Text appear here";
   var backgroundC = Colors.grey.withOpacity(0.7);
+
+  Future<bool> _joinEvent(String code) async {
+    final uri = Uri.parse(code);
+    final eventId = uri.queryParameters['eventId'];
+    if (eventId == null) {
+      // show error page
+      print("FAILED1");
+      return false;
+    }
+    final joinInfo =
+        await Provider.of<Events>(context, listen: false).JoinEvent(eventId);
+
+    if (!joinInfo.isSuccess) {
+      print("FAILED2");
+      return false;
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ScanSuccess(joinInfo.title),
+      ),
+    );
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -27,16 +53,13 @@ class _QRScannerState extends State<QRScanner> {
           onDetect: (barcode, args) {
             final String? code = barcode.rawValue;
             debugPrint('Barcode found! $code');
-            setState(() {
-              val = code!;
-            });
-            // on success, go to success page
-            // on failure, go to fail page
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ScanSuccess(val),
-              ),
-            );
+            if (code == null) {
+              // show error
+              print("FAILED");
+              return;
+            }
+            _joinEvent(code);
+            //join event
           },
         ),
         Center(
@@ -70,12 +93,12 @@ class _QRScannerState extends State<QRScanner> {
                 "Scan QR Code",
                 style: TextStyle(fontSize: 32),
               ),
-              Text(val),
+              // Text(val),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ScanSuccess(val),
+                      builder: (context) => ScanSuccess("val"),
                     ),
                   );
                 },
