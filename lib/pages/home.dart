@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:konseki_app/models/alert_info.dart';
 import 'package:konseki_app/pages/new_event.dart';
 import 'package:konseki_app/providers/auth.dart';
+import 'package:konseki_app/providers/event.dart';
 import 'package:konseki_app/widgets/home/info_section.dart';
 import 'package:konseki_app/widgets/home/update_result_button.dart';
 import 'package:konseki_app/widgets/home/virus_related_info.dart';
@@ -58,12 +59,7 @@ class Home extends StatelessWidget {
           const SizedBox(
             height: 38,
           ),
-          InfoSection(AlertInfo(
-            date: DateTime.now(),
-            message:
-                "Someone you have interacted with recently has been infected!",
-            isImportant: true,
-          )),
+          InfoSection(),
           const SizedBox(
             height: 20,
           ),

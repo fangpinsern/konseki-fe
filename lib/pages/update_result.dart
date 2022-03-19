@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:konseki_app/main.dart';
 import 'package:konseki_app/pages/home.dart';
+import 'package:konseki_app/providers/event.dart';
+import 'package:provider/provider.dart';
 
 class UpdateResult extends StatefulWidget {
   const UpdateResult({Key? key}) : super(key: key);
@@ -64,12 +66,21 @@ class _UpdateResultState extends State<UpdateResult> {
             ),
             TextButton(
               child: const Text('Confirm Result'),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MyHomePage(
-                    index: 0,
-                  ),
-                ));
+              onPressed: () async {
+                final isSuccess =
+                    await Provider.of<Events>(context, listen: false)
+                        .UpdateStatus(chosenNumber == 2, DateTime.now());
+                if (isSuccess) {
+                  // should change to success failure page
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MyHomePage(
+                      index: 0,
+                    ),
+                  ));
+                } else {
+                  Navigator.of(context).pop();
+                  // move to error page
+                }
               },
             ),
           ],

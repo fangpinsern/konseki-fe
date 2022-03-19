@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:konseki_app/models/alert_info.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'dart:convert';
 
@@ -10,9 +11,13 @@ class Events with ChangeNotifier {
   // }
 
   List<HistoryInfo> historyInfo = [];
+  AlertInfo alertMessage = AlertInfo(
+      message: "No news is good news",
+      date: DateTime.now(),
+      isImportant: false);
   String token;
 
-  final String _backendURL = '172.17.75.6:8080';
+  final String _backendURL = '10.0.2.2:8080';
 
   Events(this.token, this.historyInfo);
 // class Event {
@@ -100,8 +105,72 @@ class Events with ChangeNotifier {
         helper.add(info);
       });
 
+      helper.sort((a, b) {
+        final aDate = a.date;
+        final bDate = b.date;
+        return bDate.compareTo(aDate);
+      });
+
       historyInfo = helper;
 
+      notifyListeners();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  Future<bool> UpdateStatus(bool isPositive, DateTime date) async {
+    if (!isPositive) {
+      return true;
+    }
+    var url = Uri.http(_backendURL, "/infection/update");
+    try {
+      var response = await http.post(url,
+          body: json.encode({
+            "date": (date.millisecondsSinceEpoch / 1000).ceil(),
+          }),
+          headers: {"Authorization": "Bearer $token"});
+
+      final responseData = json.decode(response.body);
+      print(responseData);
+
+      final sucessfullyJoin = responseData['is_success'];
+
+      return sucessfullyJoin;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  Future<void> GetMessage() async {
+    var url = Uri.http(_backendURL, "/messages/all");
+    try {
+      var response = await http.get(
+        url,
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      );
+      final responseData = json.decode(response.body);
+      print(responseData); // will have messages
+
+      final messages = responseData['messages'];
+
+      if (messages == null) {
+        return;
+      }
+
+      // sort the events
+
+      final firstMessage = messages[0];
+      final newAlert = AlertInfo(
+        message: firstMessage['message'],
+        date: DateTime.fromMillisecondsSinceEpoch(
+            firstMessage['created_date'] * 1000),
+        isImportant: firstMessage['is_important'],
+      );
+
+      alertMessage = newAlert;
       notifyListeners();
     } catch (err) {
       throw err;

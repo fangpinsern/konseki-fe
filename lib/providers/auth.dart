@@ -16,7 +16,7 @@ class Auth with ChangeNotifier {
   String _name = "";
 
   final String _APIKey = "AIzaSyDdRiul6T45MvsKtKcMMbqfdxnc-zxpKlU";
-  final String backendURL = '172.17.75.6:8080';
+  final String backendURL = '10.0.2.2:8080';
 
   bool get isAuth {
     print("this is $_idtoken");
@@ -53,6 +53,7 @@ class Auth with ChangeNotifier {
         ),
       );
 
+      print("iamhere1");
       final responseData = json.decode(response.body);
 
       if (responseData['error'] != null) {
@@ -83,6 +84,7 @@ class Auth with ChangeNotifier {
         print(responseData1);
       }
 
+      print("iamhere2");
       var url2 = Uri.http(backendURL, "/profile");
       var response2 = await http.get(
         url2,
@@ -90,7 +92,7 @@ class Auth with ChangeNotifier {
           "Authorization": "Bearer $_idtoken",
         },
       );
-
+      print("iamhere3");
       final profileData = json.decode(response2.body);
       print(profileData);
 
@@ -108,6 +110,7 @@ class Auth with ChangeNotifier {
       });
       prefs.setString('userData', userData);
     } catch (err) {
+      print(err);
       throw err;
     }
   }

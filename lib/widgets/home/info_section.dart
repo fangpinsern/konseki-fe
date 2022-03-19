@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:konseki_app/models/alert_info.dart';
+import 'package:konseki_app/providers/event.dart';
+import 'package:provider/provider.dart';
 
 class InfoSection extends StatefulWidget {
-  AlertInfo alertMessage;
-  InfoSection(this.alertMessage);
+  // AlertInfo alertMessage;
+  InfoSection();
 
   @override
   State<InfoSection> createState() => _InfoSectionState();
@@ -11,7 +13,19 @@ class InfoSection extends StatefulWidget {
 
 class _InfoSectionState extends State<InfoSection> {
   @override
+  void initState() {
+    // TODO: implement initState
+    try {
+      Provider.of<Events>(context, listen: false).GetMessage();
+    } catch (err) {
+      // AlertDialog()
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final alertMessage = Provider.of<Events>(context).alertMessage;
     return Card(
       color: Color(0xfff0f0f0),
       child: Container(
@@ -23,7 +37,7 @@ class _InfoSectionState extends State<InfoSection> {
             Radius.circular(10),
           ),
         ),
-        child: widget.alertMessage.isImportant
+        child: alertMessage.isImportant
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +50,7 @@ class _InfoSectionState extends State<InfoSection> {
                     height: 5,
                   ),
                   Text(
-                    widget.alertMessage.message,
+                    alertMessage.message,
                     style: TextStyle(
                       fontSize: 14,
                     ),
