@@ -16,8 +16,11 @@ class UpdateResultButton extends StatelessWidget {
       child: Card(
         color: const Color(0xFFE3F2FD),
         child: Container(
-          width: 315,
-          height: 120,
+          width: double.infinity,
+          // height: 120,
+          constraints: BoxConstraints(
+            minHeight: 120,
+          ),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -33,7 +36,7 @@ class UpdateResultButton extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text("Update Result"),
+              Text("Update result"),
             ],
           ),
         ),

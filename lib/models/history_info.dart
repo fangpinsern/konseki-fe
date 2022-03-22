@@ -28,8 +28,9 @@ class Event {
 
 class QRInfo {
   final String title;
+  final String id;
   final String link;
-  QRInfo(this.title, this.link);
+  QRInfo(this.title, this.link, this.id);
 }
 
 class JoinEventResponse {

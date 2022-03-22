@@ -11,8 +11,12 @@ import 'package:konseki_app/providers/event.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.landscapeLeft,
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.landscapeRight
+  // ]);
   runApp(const MyApp());
 }
 
@@ -77,37 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   var firstBuild = true;
 
-  // final historyInfo = [
-  //   HistoryInfo(
-  //     date: DateTime.now(),
-  //     events: [
-  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
-  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-  //     ],
-  //   ),
-  //   HistoryInfo(
-  //     date: DateTime.now(),
-  //     events: [
-  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
-  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-  //     ],
-  //   ),
-  //   HistoryInfo(
-  //     date: DateTime.now(),
-  //     events: [
-  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
-  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-  //     ],
-  //   ),
-  //   HistoryInfo(
-  //     date: DateTime.now(),
-  //     events: [
-  //       Event("History Project", 5, DateTime.now(), "https://google.com"),
-  //       Event("Lunch @ Poke Theory", 2, DateTime.now(), "https://google.com"),
-  //     ],
-  //   )
-  // ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -152,7 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> _pages = <Widget>[
       Container(
         margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.08),
+          horizontal: MediaQuery.of(context).size.width * 0.08,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

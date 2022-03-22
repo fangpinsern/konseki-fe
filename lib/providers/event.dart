@@ -38,7 +38,11 @@ class Events with ChangeNotifier {
 
       final responseData = json.decode(response.body);
       print(responseData);
-      final newEvent = QRInfo(responseData['name'], responseData['id']);
+      final newEvent = QRInfo(
+        responseData['name'],
+        responseData['link'],
+        responseData['id'],
+      );
       return newEvent;
     } catch (err) {
       throw err;

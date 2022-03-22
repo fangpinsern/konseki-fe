@@ -15,60 +15,62 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     var name = Provider.of<Auth>(context).name;
     return Flexible(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 60,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Hello",
-                      style: TextStyle(
-                        fontSize: 35,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 60,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Hello",
+                        style: TextStyle(
+                          fontSize: 35,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "$name!",
-                      style: const TextStyle(
-                        fontSize: 35,
-                        color: Colors.blue,
-                      ),
-                    )
-                  ],
+                      Text(
+                        "$name!",
+                        style: const TextStyle(
+                          fontSize: 35,
+                          color: Colors.blue,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                  onPressed: () {
-                    print("new event page");
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NewEvent()));
-                    Feedback.forTap(context);
-                  },
-                  icon: const Icon(
-                    Icons.add,
-                    size: 35,
-                  )),
-            ],
-          ),
-          const SizedBox(
-            height: 38,
-          ),
-          InfoSection(),
-          const SizedBox(
-            height: 20,
-          ),
-          VirusRelatedInfo(),
-          SizedBox(
-            height: 30,
-          ),
-          UpdateResultButton(),
-        ],
+                IconButton(
+                    onPressed: () {
+                      print("new event page");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NewEvent()));
+                      Feedback.forTap(context);
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      size: 35,
+                    )),
+              ],
+            ),
+            const SizedBox(
+              height: 38,
+            ),
+            InfoSection(),
+            const SizedBox(
+              height: 20,
+            ),
+            VirusRelatedInfo(),
+            SizedBox(
+              height: 30,
+            ),
+            UpdateResultButton(),
+          ],
+        ),
       ),
     );
   }

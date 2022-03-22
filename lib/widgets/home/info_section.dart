@@ -29,10 +29,12 @@ class _InfoSectionState extends State<InfoSection> {
     return Card(
       color: Color(0xfff0f0f0),
       child: Container(
-        width: 315,
-        height: 120,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 17.5,
+          horizontal: 15,
+        ),
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -42,17 +44,32 @@ class _InfoSectionState extends State<InfoSection> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "IMPORTANT",
-                    style: TextStyle(fontSize: 14, color: Colors.red),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.red,
+                      height: 1.2,
+                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     alertMessage.message,
                     style: TextStyle(
                       fontSize: 14,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Steve from (3 Mar) Morning run has tested positive.",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey,
                     ),
                   ),
                 ],

@@ -18,7 +18,7 @@ class _NewEventState extends State<NewEvent> {
   Future<QRInfo> _submit() async {
     var res = await Provider.of<Events>(context, listen: false)
         .CreateEvent(titleController.text);
-    return QRInfo(res.title, res.link);
+    return QRInfo(res.title, res.link, res.id);
   }
 
   @override
@@ -92,11 +92,14 @@ class _NewEventState extends State<NewEvent> {
                   // check if api success
                   // use the return value
                   var result = await _submit();
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
                       builder: (context) => QRPage(
-                            groupName: result.title,
-                            eventId: result.link,
-                          )));
+                        groupName: result.title,
+                        eventId: result.link,
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   width: 325,

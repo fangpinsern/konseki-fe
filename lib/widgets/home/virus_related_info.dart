@@ -13,7 +13,7 @@ class VirusRelatedInfo extends StatelessWidget {
       "Loss of taste or smell"
     ];
     return Container(
-      width: 315,
+      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,8 +23,12 @@ class VirusRelatedInfo extends StatelessWidget {
               fontSize: 18,
             ),
           ),
+          Divider(
+            color: Color.fromARGB(255, 240, 240, 240),
+            thickness: 1,
+          ),
           SizedBox(
-            height: 18,
+            height: 3,
           ),
           Text(
             "  Common symptoms",

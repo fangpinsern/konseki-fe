@@ -94,9 +94,14 @@ class _UpdateResultState extends State<UpdateResult> {
     return Scaffold(
       body: Center(
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
+          // width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height,
+          margin: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.08,
+            vertical: 0,
+          ),
           child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -106,17 +111,19 @@ class _UpdateResultState extends State<UpdateResult> {
                 Row(
                   children: [
                     IconButton(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
                       icon: const Icon(
                         Icons.arrow_back,
-                        size: 25,
+                        size: 30,
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     const Text(
-                      "Update Results",
+                      "Update result",
                       style: TextStyle(
                         fontSize: 28,
                       ),
@@ -146,67 +153,80 @@ class _UpdateResultState extends State<UpdateResult> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          chosenNumber = chosenNumber != 1 ? 1 : 0;
-                        });
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9 * 0.3,
-                        height: 48,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "Negative",
-                              style: TextStyle(
-                                fontSize: 16,
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            chosenNumber = chosenNumber != 1 ? 1 : 0;
+                          });
+                        },
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 0.9 * 0.3,
+                          // constraints: BoxConstraints(
+                          //   minWidth: 10,
+                          // ),
+                          height: 48,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                "Negative",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                formChoices[chosenNumber]!["fgColorNegative"],
+                            backgroundColor:
+                                formChoices[chosenNumber]!["bgColorNegative"]),
                       ),
-                      style: ButtonStyle(
-                          foregroundColor:
-                              formChoices[chosenNumber]!["fgColorNegative"],
-                          backgroundColor:
-                              formChoices[chosenNumber]!["bgColorNegative"]),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          chosenNumber = chosenNumber != 2 ? 2 : 0;
-                        });
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9 * 0.3,
-                        height: 48,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "Positive",
-                              style: TextStyle(
-                                fontSize: 16,
+                    SizedBox(
+                      width: 25,
+                    ),
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            chosenNumber = chosenNumber != 2 ? 2 : 0;
+                          });
+                        },
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 0.9 * 0.3,
+                          // constraints: BoxConstraints(
+                          //   minWidth: 10,
+                          // ),
+                          height: 48,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                "Positive",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                formChoices[chosenNumber]!["fgColorPositive"],
+                            backgroundColor:
+                                formChoices[chosenNumber]!["bgColorPositive"]),
                       ),
-                      style: ButtonStyle(
-                          foregroundColor:
-                              formChoices[chosenNumber]!["fgColorPositive"],
-                          backgroundColor:
-                              formChoices[chosenNumber]!["bgColorPositive"]),
                     )
                   ],
                 ),
