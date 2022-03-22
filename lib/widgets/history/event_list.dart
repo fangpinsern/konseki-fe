@@ -7,7 +7,7 @@ import 'package:konseki_app/pages/qr_page.dart';
 class EventList extends StatelessWidget {
   final List<Event> events;
   final DateTime date;
-  EventList(this.events, this.date);
+  EventList(this.events, this.date, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,48 +27,40 @@ class EventList extends StatelessWidget {
             ))),
             child: Text(
               DateFormat("EEEE, d MMM").format(date),
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.blue,
-              ),
+              style: Theme.of(context).textTheme.headline3!.apply(
+                    color: Colors.blue,
+                  ),
             ),
           ),
           ...events.map((val) {
             return Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9 * 0.2,
                   // padding: const EdgeInsets.all(10),
                   child: Text(
                     DateFormat("jm").format(val.date),
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9 * 0.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         val.title,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Text(
                         "${val.pax.toString()} pax",
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+                        style: Theme.of(context).textTheme.subtitle1,
                       ),
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9 * 0.1,
                   child: IconButton(
                     onPressed: () {

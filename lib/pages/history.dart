@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/providers/event.dart';
 import 'package:konseki_app/widgets/history/event_list.dart';
 import 'package:provider/provider.dart';
 
 class History extends StatefulWidget {
+  const History({Key? key}) : super(key: key);
+
   @override
   State<History> createState() => _HistoryState();
 }
@@ -13,7 +14,7 @@ class _HistoryState extends State<History> {
   @override
   void initState() {
     try {
-      Provider.of<Events>(context, listen: false).GetEvents();
+      Provider.of<Events>(context, listen: false).getEvents();
     } catch (err) {
       // AlertDialog()
     }
@@ -21,7 +22,7 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _refreshEvents(BuildContext context) async {
-    await Provider.of<Events>(context, listen: false).GetEvents();
+    await Provider.of<Events>(context, listen: false).getEvents();
   }
 
   @override
@@ -33,21 +34,23 @@ class _HistoryState extends State<History> {
         Container(
           height: MediaQuery.of(context).size.height * 0.15,
           padding: EdgeInsets.fromLTRB(
-            23,
+            0,
             MediaQuery.of(context).size.height * 0.1,
             23,
             0,
           ),
           margin: EdgeInsets.zero,
-          child: const Text(
+          child: Text(
             "History",
-            style: TextStyle(fontSize: 28),
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
         RefreshIndicator(
           onRefresh: () => _refreshEvents(context),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.70,
+            height: MediaQuery.of(context).size.height -
+                kBottomNavigationBarHeight -
+                MediaQuery.of(context).size.height * 0.15,
             padding: EdgeInsets.zero,
             margin: EdgeInsets.zero,
             width: MediaQuery.of(context).size.width,

@@ -27,7 +27,7 @@ class Events with ChangeNotifier {
 //   final String link;
 //   Event(this.title, this.pax, this.date, this.link);
 // }
-  Future<QRInfo> CreateEvent(String eventName) async {
+  Future<QRInfo> createEvent(String eventName) async {
     var url = Uri.http(_backendURL, "/event/create");
     try {
       var response = await http.post(url,
@@ -37,7 +37,6 @@ class Events with ChangeNotifier {
           headers: {"Authorization": "Bearer $token"});
 
       final responseData = json.decode(response.body);
-      print(responseData);
       final newEvent = QRInfo(
         responseData['name'],
         responseData['link'],
@@ -49,7 +48,7 @@ class Events with ChangeNotifier {
     }
   }
 
-  Future<JoinEventResponse> JoinEvent(String eventId) async {
+  Future<JoinEventResponse> joinEvent(String eventId) async {
     var url = Uri.http(_backendURL, "/event/join");
     try {
       var response = await http.post(url,
@@ -59,7 +58,7 @@ class Events with ChangeNotifier {
           headers: {"Authorization": "Bearer $token"});
 
       final responseData = json.decode(response.body);
-      print(responseData);
+
       final sucessfullyJoin = JoinEventResponse(responseData['event_name'],
           responseData['id'], responseData['is_success']);
 
@@ -69,7 +68,7 @@ class Events with ChangeNotifier {
     }
   }
 
-  Future<void> GetEvents() async {
+  Future<void> getEvents() async {
     var url = Uri.http(_backendURL, "/event/all");
     try {
       var response = await http.get(
@@ -79,7 +78,6 @@ class Events with ChangeNotifier {
         },
       );
       final responseData = json.decode(response.body);
-      print(responseData); // will have events
 
       final events = responseData['events'];
 
@@ -123,7 +121,7 @@ class Events with ChangeNotifier {
     }
   }
 
-  Future<bool> UpdateStatus(bool isPositive, DateTime date) async {
+  Future<bool> updateStatus(bool isPositive, DateTime date) async {
     if (!isPositive) {
       return true;
     }
@@ -136,7 +134,6 @@ class Events with ChangeNotifier {
           headers: {"Authorization": "Bearer $token"});
 
       final responseData = json.decode(response.body);
-      print(responseData);
 
       final sucessfullyJoin = responseData['is_success'];
 
@@ -146,7 +143,7 @@ class Events with ChangeNotifier {
     }
   }
 
-  Future<void> GetMessage() async {
+  Future<void> getMessage() async {
     var url = Uri.http(_backendURL, "/messages/all");
     try {
       var response = await http.get(
@@ -156,7 +153,6 @@ class Events with ChangeNotifier {
         },
       );
       final responseData = json.decode(response.body);
-      print(responseData); // will have messages
 
       final messages = responseData['messages'];
 

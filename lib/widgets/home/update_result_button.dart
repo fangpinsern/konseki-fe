@@ -9,8 +9,8 @@ class UpdateResultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => UpdateResult()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UpdateResult()));
         Feedback.forTap(context);
       },
       child: Card(
@@ -18,8 +18,8 @@ class UpdateResultButton extends StatelessWidget {
         child: Container(
           width: double.infinity,
           // height: 120,
-          constraints: BoxConstraints(
-            minHeight: 120,
+          constraints: const BoxConstraints(
+            minHeight: 110,
           ),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
@@ -33,10 +33,13 @@ class UpdateResultButton extends StatelessWidget {
                 "assets/icons/testkit-icon.svg",
                 height: 60,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text("Update result"),
+              Text(
+                "Update result",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ],
           ),
         ),

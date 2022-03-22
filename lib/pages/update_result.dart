@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:konseki_app/main.dart';
-import 'package:konseki_app/pages/home.dart';
 import 'package:konseki_app/providers/event.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +68,7 @@ class _UpdateResultState extends State<UpdateResult> {
               onPressed: () async {
                 final isSuccess =
                     await Provider.of<Events>(context, listen: false)
-                        .UpdateStatus(chosenNumber == 2, DateTime.now());
+                        .updateStatus(chosenNumber == 2, DateTime.now());
                 if (isSuccess) {
                   // should change to success failure page
                   Navigator.of(context).push(MaterialPageRoute(
@@ -122,11 +121,9 @@ class _UpdateResultState extends State<UpdateResult> {
                     const SizedBox(
                       width: 10,
                     ),
-                    const Text(
+                    Text(
                       "Update result",
-                      style: TextStyle(
-                        fontSize: 28,
-                      ),
+                      style: Theme.of(context).textTheme.headline2,
                     )
                   ],
                 ),
@@ -143,11 +140,9 @@ class _UpdateResultState extends State<UpdateResult> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
+                Text(
                   "Your latest result",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
                 const SizedBox(
                   height: 20,
@@ -163,10 +158,6 @@ class _UpdateResultState extends State<UpdateResult> {
                           });
                         },
                         child: Container(
-                          // width: MediaQuery.of(context).size.width * 0.9 * 0.3,
-                          // constraints: BoxConstraints(
-                          //   minWidth: 10,
-                          // ),
                           height: 48,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
@@ -176,9 +167,6 @@ class _UpdateResultState extends State<UpdateResult> {
                             children: const [
                               Text(
                                 "Negative",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
                               ),
                             ],
                           ),
@@ -190,7 +178,7 @@ class _UpdateResultState extends State<UpdateResult> {
                                 formChoices[chosenNumber]!["bgColorNegative"]),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 25,
                     ),
                     Expanded(
@@ -214,9 +202,6 @@ class _UpdateResultState extends State<UpdateResult> {
                             children: const [
                               Text(
                                 "Positive",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
                               ),
                             ],
                           ),
@@ -233,13 +218,16 @@ class _UpdateResultState extends State<UpdateResult> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                Text(
                   "Remember to wait 15 minutes before noting the results!",
-                  style: TextStyle(fontSize: 14),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
-                const Text(
+                Text(
                   "This is valid for 24 hours.",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .apply(color: Colors.grey),
                 ),
                 const SizedBox(
                   height: 20,
@@ -250,7 +238,7 @@ class _UpdateResultState extends State<UpdateResult> {
                       : () {
                           _confirmation(context);
                         },
-                  child: Container(
+                  child: SizedBox(
                     width: 325,
                     height: 48,
                     child: Column(
@@ -258,7 +246,6 @@ class _UpdateResultState extends State<UpdateResult> {
                       children: const [
                         Text(
                           "Submit",
-                          style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),

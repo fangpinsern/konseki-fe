@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 class QRScanner extends StatefulWidget {
   final double height;
   final double width;
-  QRScanner({required double this.height, required double this.width});
+  QRScanner({Key? key, required this.height, required this.width})
+      : super(key: key);
 
   @override
   State<QRScanner> createState() => _QRScannerState();
@@ -22,14 +23,12 @@ class _QRScannerState extends State<QRScanner> {
     final eventId = uri.queryParameters['eventId'];
     if (eventId == null) {
       // show error page
-      print("FAILED1");
       return false;
     }
     final joinInfo =
-        await Provider.of<Events>(context, listen: false).JoinEvent(eventId);
+        await Provider.of<Events>(context, listen: false).joinEvent(eventId);
 
     if (!joinInfo.isSuccess) {
-      print("FAILED2");
       return false;
     }
     Navigator.of(context).push(
@@ -55,7 +54,6 @@ class _QRScannerState extends State<QRScanner> {
             debugPrint('Barcode found! $code');
             if (code == null) {
               // show error
-              print("FAILED");
               return;
             }
             _joinEvent(code);
@@ -76,13 +74,13 @@ class _QRScannerState extends State<QRScanner> {
                   )),
             ),
             // color: Colors.red,
-            child: SizedBox(
+            child: const SizedBox(
               height: 280,
               width: 280,
             ),
           ),
         ),
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
@@ -90,8 +88,10 @@ class _QRScannerState extends State<QRScanner> {
                 height: MediaQuery.of(context).size.height * 0.2,
               ),
               Text(
-                "Scan QR Code",
-                style: TextStyle(fontSize: 32),
+                "Scan event QR Code",
+                style: Theme.of(context).textTheme.headline2!.apply(
+                      color: Colors.white,
+                    ),
               ),
               // Text(val),
               ElevatedButton(
@@ -102,7 +102,7 @@ class _QRScannerState extends State<QRScanner> {
                     ),
                   );
                 },
-                child: Text("To success"),
+                child: const Text("To success"),
               ),
             ],
           ),

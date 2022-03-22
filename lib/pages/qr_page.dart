@@ -3,11 +3,12 @@ import 'package:konseki_app/main.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRPage extends StatefulWidget {
-  final groupName;
-  var groupLink;
+  final String groupName;
+  late String groupLink;
 
-  QRPage({required this.groupName, required eventId}) {
-    this.groupLink = "https://google.com?eventId=$eventId";
+  QRPage({Key? key, required this.groupName, required eventId})
+      : super(key: key) {
+    groupLink = "https://google.com?eventId=$eventId";
   }
 
   @override
@@ -19,61 +20,53 @@ class _QRPageState extends State<QRPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
-              const Text(
-                "Join group:",
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                widget.groupName,
-                style: const TextStyle(
-                  fontSize: 32,
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              QrImage(
-                data: widget.groupLink,
-                size: 280,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MyHomePage(
-                      index: 2,
-                    ),
-                  ));
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  height: 48,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Done",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+            ),
+            Text(
+              "Share QR code for",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            Text(
+              widget.groupName,
+              style: Theme.of(context).textTheme.headline2!.apply(
+                    color: Colors.blue,
                   ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            QrImage(
+                data: widget.groupLink,
+                size: 325,
+                foregroundColor: const Color.fromRGBO(0, 92, 178, 1)),
+            const SizedBox(
+              height: 40,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MyHomePage(
+                    index: 2,
+                  ),
+                ));
+              },
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 48,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Done",
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,11 +13,10 @@ class Auth with ChangeNotifier {
   String _localId = "";
   String _name = "";
 
-  final String _APIKey = "AIzaSyDdRiul6T45MvsKtKcMMbqfdxnc-zxpKlU";
+  final String _apiKey = "AIzaSyDdRiul6T45MvsKtKcMMbqfdxnc-zxpKlU";
   final String backendURL = '10.0.2.2:8080';
 
   bool get isAuth {
-    print("this is $_idtoken");
     return _idtoken != "";
   }
 
@@ -41,7 +38,7 @@ class Auth with ChangeNotifier {
       String email, String password, String name, String urlSegment) async {
     try {
       var url = Uri.parse(
-          "https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$_APIKey");
+          "https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$_apiKey");
       var response = await http.post(
         url,
         body: json.encode(
@@ -53,7 +50,6 @@ class Auth with ChangeNotifier {
         ),
       );
 
-      print("iamhere1");
       final responseData = json.decode(response.body);
 
       if (responseData['error'] != null) {
@@ -81,10 +77,8 @@ class Auth with ChangeNotifier {
         );
 
         final responseData1 = json.decode(response1.body);
-        print(responseData1);
       }
 
-      print("iamhere2");
       var url2 = Uri.http(backendURL, "/profile");
       var response2 = await http.get(
         url2,
@@ -92,9 +86,7 @@ class Auth with ChangeNotifier {
           "Authorization": "Bearer $_idtoken",
         },
       );
-      print("iamhere3");
       final profileData = json.decode(response2.body);
-      print(profileData);
 
       _name = profileData['name'];
 
@@ -110,7 +102,6 @@ class Auth with ChangeNotifier {
       });
       prefs.setString('userData', userData);
     } catch (err) {
-      print(err);
       throw err;
     }
   }
@@ -124,7 +115,6 @@ class Auth with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
-    // print("iamhere");
     final prefs = await SharedPreferences.getInstance();
     final data = prefs.getString("userData");
     if (data == null) {

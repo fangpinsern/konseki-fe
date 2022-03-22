@@ -17,7 +17,7 @@ class _NewEventState extends State<NewEvent> {
 
   Future<QRInfo> _submit() async {
     var res = await Provider.of<Events>(context, listen: false)
-        .CreateEvent(titleController.text);
+        .createEvent(titleController.text);
     return QRInfo(res.title, res.link, res.id);
   }
 
@@ -25,7 +25,7 @@ class _NewEventState extends State<NewEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +36,8 @@ class _NewEventState extends State<NewEvent> {
               Row(
                 children: [
                   IconButton(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.zero,
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(
                       Icons.arrow_back,
@@ -45,11 +47,9 @@ class _NewEventState extends State<NewEvent> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text(
+                  Text(
                     "New Event",
-                    style: TextStyle(
-                      fontSize: 28,
-                    ),
+                    style: Theme.of(context).textTheme.headline2,
                   )
                 ],
               ),
@@ -74,13 +74,16 @@ class _NewEventState extends State<NewEvent> {
                 children: [
                   Text(
                     "Today's Date",
-                    style: TextStyle(fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     DateFormat('dd-MM-yyyy').format(
                       DateTime.now().toLocal(),
                     ),
-                    style: TextStyle(fontSize: 16),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .apply(color: Colors.grey),
                   ),
                 ],
               ),
@@ -101,7 +104,7 @@ class _NewEventState extends State<NewEvent> {
                     ),
                   );
                 },
-                child: Container(
+                child: SizedBox(
                   width: 325,
                   height: 48,
                   child: Column(
@@ -109,7 +112,6 @@ class _NewEventState extends State<NewEvent> {
                     children: const [
                       Text(
                         "Create",
-                        style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),

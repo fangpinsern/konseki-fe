@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-
 class HistoryInfo {
   final DateTime date;
   final List<Event> events;

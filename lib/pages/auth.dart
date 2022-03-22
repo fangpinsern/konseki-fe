@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:konseki_app/main.dart';
 import 'package:konseki_app/models/http_exceptions.dart';
 import 'package:konseki_app/providers/auth.dart';
 import 'package:provider/provider.dart';
 
-enum AuthMode { Signup, Login }
+enum AuthMode { signup, login }
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -15,25 +14,20 @@ class AuthScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: const [
-                Text(
-                  "Welcome to Konseki",
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.blue,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                AuthCard(),
-                SizedBox(
-                  height: 40,
-                ),
-              ],
-            ),
+          child: Column(
+            children: [
+              Text(
+                "Welcome to Konseki",
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const AuthCard(),
+              const SizedBox(
+                height: 40,
+              ),
+            ],
           ),
         ),
       ),
@@ -51,7 +45,7 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _passwordController = TextEditingController();
-  AuthMode _authMode = AuthMode.Login;
+  AuthMode _authMode = AuthMode.login;
 
   Map<String, String> _authData = {
     'name': '',
@@ -61,18 +55,16 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
 
   Future<void> _submit() async {
-    print("clciked");
     if (!_formKey.currentState!.validate()) {
       // Invalid!
       // return;
-      print("somethign wrong");
     }
     _formKey.currentState!.save();
     setState(() {
       _isLoading = true;
     });
     try {
-      if (_authMode == AuthMode.Login) {
+      if (_authMode == AuthMode.login) {
         await Provider.of<Auth>(context, listen: false).login(
           _authData['email']!,
           _authData['password']!,
@@ -113,27 +105,32 @@ class _AuthCardState extends State<AuthCard> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Error"),
+        title: const Text(
+          "Error",
+        ),
         content: Text(message),
         actions: [
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Okay"))
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "Okay",
+            ),
+          )
         ],
       ),
     );
   }
 
   void _switchAuthMode() {
-    if (_authMode == AuthMode.Login) {
+    if (_authMode == AuthMode.login) {
       setState(() {
-        _authMode = AuthMode.Signup;
+        _authMode = AuthMode.signup;
       });
     } else {
       setState(() {
-        _authMode = AuthMode.Login;
+        _authMode = AuthMode.login;
       });
     }
   }
@@ -147,16 +144,20 @@ class _AuthCardState extends State<AuthCard> {
       color: Colors.transparent,
       child: Container(
         // height: deviceSize.height * 0.2,
-        constraints: BoxConstraints(minHeight: 260),
+        constraints: const BoxConstraints(
+          minHeight: 260,
+        ),
         width: deviceSize.width * 0.8,
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                if (_authMode == AuthMode.Signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Name'),
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (val) {
                       if (val == null) {
@@ -176,7 +177,9 @@ class _AuthCardState extends State<AuthCard> {
                     },
                   ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (val) {
                     if (val == null) {
@@ -196,7 +199,9 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Password"),
+                  decoration: const InputDecoration(
+                    labelText: "Password",
+                  ),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (val) {
@@ -215,35 +220,38 @@ class _AuthCardState extends State<AuthCard> {
                     _authData['password'] = val;
                   },
                 ),
-                if (_authMode == AuthMode.Signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                    enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    enabled: _authMode == AuthMode.signup,
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm Password',
+                    ),
                     obscureText: true,
-                    validator: _authMode == AuthMode.Signup
+                    validator: _authMode == AuthMode.signup
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return null;
                           }
                         : null,
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   onPressed: _submit,
-                  child: Container(
+                  child: SizedBox(
                       width: deviceSize.width * 0.8,
                       child: Text(
-                        _authMode == AuthMode.Login ? "Login" : "Register",
+                        _authMode == AuthMode.login ? "Login" : "Register",
                         textAlign: TextAlign.center,
                       )),
                 ),
                 TextButton(
                   onPressed: _switchAuthMode,
                   child:
-                      Text(_authMode == AuthMode.Login ? "Register" : "Login"),
+                      Text(_authMode == AuthMode.login ? "Register" : "Login"),
                 )
               ],
             ),

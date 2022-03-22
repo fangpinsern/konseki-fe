@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/auth.dart';
 import 'package:konseki_app/pages/history.dart';
 import 'package:konseki_app/pages/home.dart';
@@ -43,6 +41,59 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
+              fontFamily: 'Poppins',
+              textTheme: ThemeData.light().textTheme.copyWith(
+                    bodyText1: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                    caption: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+                    headline1: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 35,
+                      color: Colors.black,
+                    ),
+                    headline2: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 28,
+                      height: 1.5,
+                      color: Colors.black,
+                    ),
+                    headline3: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    headline4: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    button: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      height: 1.5,
+                      color: Colors.black,
+                    ),
+                    subtitle1: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      height: 1.5,
+                      color: Colors.grey,
+                    ),
+                  ),
             ),
             home: auth.isAuth
                 ? MyHomePage(
@@ -53,8 +104,8 @@ class MyApp extends StatelessWidget {
                     builder: (ctx, authResultSnapshot) =>
                         authResultSnapshot.connectionState ==
                                 ConnectionState.waiting
-                            ? SplashScreen()
-                            : AuthScreen(),
+                            ? const SplashScreen()
+                            : const AuthScreen(),
                   ),
             routes: {
               '/home': (context) => MyHomePage(index: 0),
@@ -129,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: const [
             Home(),
           ],
         ),
@@ -147,15 +198,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       Container(
+        height: MediaQuery.of(context).size.height -
+            kBottomNavigationBarHeight -
+            280,
         margin: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.1),
-        child: History(),
+        child: const History(),
       ),
     ];
 
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: _pages.elementAt(_selectedIndex),
         ),
