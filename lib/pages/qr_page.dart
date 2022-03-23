@@ -6,10 +6,8 @@ class QRPage extends StatefulWidget {
   final String groupName;
   late String groupLink;
 
-  QRPage({Key? key, required this.groupName, required eventId})
-      : super(key: key) {
-    groupLink = "https://google.com?eventId=$eventId";
-  }
+  QRPage({Key? key, required this.groupName, required this.groupLink})
+      : super(key: key) {}
 
   @override
   State<QRPage> createState() => _QRPageState();

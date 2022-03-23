@@ -59,8 +59,11 @@ class Events with ChangeNotifier {
 
       final responseData = json.decode(response.body);
 
-      final sucessfullyJoin = JoinEventResponse(responseData['event_name'],
-          responseData['id'], responseData['is_success']);
+      final sucessfullyJoin = JoinEventResponse(
+          responseData['event_name'],
+          responseData['id'],
+          responseData['is_success'],
+          responseData['creator_name']);
 
       return sucessfullyJoin;
     } catch (err) {

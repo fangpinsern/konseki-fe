@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:konseki_app/models/history_info.dart';
 import 'package:konseki_app/pages/qr_page.dart';
 import 'package:konseki_app/providers/event.dart';
+import 'package:konseki_app/widgets/utils/top_navbar.dart';
 import 'package:provider/provider.dart';
 
 class NewEvent extends StatefulWidget {
@@ -24,34 +25,44 @@ class _NewEventState extends State<NewEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ElevatedButton(
+        onPressed: () async {
+          // check if api success
+          // use the return value
+          var result = await _submit();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => QRPage(
+                groupName: result.title,
+                groupLink: result.link,
+              ),
+            ),
+          );
+        },
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 48,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Create",
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Center(
         child: SizedBox(
+          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width * 0.8,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 60,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.zero,
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      size: 25,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "New Event",
-                    style: Theme.of(context).textTheme.headline2,
-                  )
-                ],
+              TopNavBar(
+                header: "New Event",
+                haveBackNav: true,
               ),
               const SizedBox(
                 height: 40,
@@ -89,33 +100,6 @@ class _NewEventState extends State<NewEvent> {
               ),
               const SizedBox(
                 height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  // check if api success
-                  // use the return value
-                  var result = await _submit();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => QRPage(
-                        groupName: result.title,
-                        eventId: result.link,
-                      ),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  width: 325,
-                  height: 48,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Create",
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ],
           ),

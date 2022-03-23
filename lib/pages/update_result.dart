@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:konseki_app/main.dart';
 import 'package:konseki_app/providers/event.dart';
+import 'package:konseki_app/widgets/utils/top_navbar.dart';
 import 'package:provider/provider.dart';
 
 class UpdateResult extends StatefulWidget {
@@ -91,6 +92,26 @@ class _UpdateResultState extends State<UpdateResult> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ElevatedButton(
+        onPressed: chosenNumber == 0
+            ? null
+            : () {
+                _confirmation(context);
+              },
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 48,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Submit",
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Center(
         child: Container(
           // width: MediaQuery.of(context).size.width * 0.8,
@@ -104,28 +125,9 @@ class _UpdateResultState extends State<UpdateResult> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(
-                  height: 60,
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.zero,
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 30,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Update result",
-                      style: Theme.of(context).textTheme.headline2,
-                    )
-                  ],
+                TopNavBar(
+                  header: "Update result",
+                  haveBackNav: true,
                 ),
                 const SizedBox(
                   height: 60,
@@ -228,28 +230,6 @@ class _UpdateResultState extends State<UpdateResult> {
                       .textTheme
                       .subtitle1!
                       .apply(color: Colors.grey),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: chosenNumber == 0
-                      ? null
-                      : () {
-                          _confirmation(context);
-                        },
-                  child: SizedBox(
-                    width: 325,
-                    height: 48,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Submit",
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ],
             ),

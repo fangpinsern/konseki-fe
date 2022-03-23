@@ -33,7 +33,7 @@ class _QRScannerState extends State<QRScanner> {
     }
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ScanSuccess(joinInfo.title),
+        builder: (context) => ScanSuccess(joinInfo.title, joinInfo.creatorName),
       ),
     );
     return false;
@@ -98,7 +98,7 @@ class _QRScannerState extends State<QRScanner> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ScanSuccess("val"),
+                      builder: (context) => ScanSuccess("val", "Johnnyboi"),
                     ),
                   );
                 },

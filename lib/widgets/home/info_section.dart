@@ -25,6 +25,7 @@ class _InfoSectionState extends State<InfoSection> {
   Widget build(BuildContext context) {
     final alertMessage = Provider.of<Events>(context).alertMessage;
     return Card(
+      elevation: 0,
       color: const Color(0xfff0f0f0),
       child: Container(
         width: double.infinity,

@@ -3,7 +3,8 @@ import 'package:konseki_app/main.dart';
 
 class ScanSuccess extends StatelessWidget {
   final String groupName;
-  ScanSuccess(this.groupName, {Key? key}) : super(key: key);
+  final String creatorName;
+  ScanSuccess(this.groupName, this.creatorName, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class ScanSuccess extends StatelessWidget {
               height: 24,
             ),
             Text(
-              "Creted by: groupName",
+              "Created by: $creatorName",
               style: Theme.of(context).textTheme.bodyText1,
             ),
             const SizedBox(

@@ -33,5 +33,6 @@ class JoinEventResponse {
   final String title;
   final String id;
   final bool isSuccess;
-  JoinEventResponse(this.title, this.id, this.isSuccess);
+  final String creatorName;
+  JoinEventResponse(this.title, this.id, this.isSuccess, this.creatorName);
 }

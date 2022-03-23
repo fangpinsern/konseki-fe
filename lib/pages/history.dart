@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konseki_app/providers/event.dart';
 import 'package:konseki_app/widgets/history/event_list.dart';
+import 'package:konseki_app/widgets/utils/top_navbar.dart';
 import 'package:provider/provider.dart';
 
 class History extends StatefulWidget {
@@ -31,20 +32,21 @@ class _HistoryState extends State<History> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.15,
-          padding: EdgeInsets.fromLTRB(
-            0,
-            MediaQuery.of(context).size.height * 0.1,
-            23,
-            0,
-          ),
-          margin: EdgeInsets.zero,
-          child: Text(
-            "History",
-            style: Theme.of(context).textTheme.headline2,
-          ),
-        ),
+        // Container(
+        //   height: MediaQuery.of(context).size.height * 0.15,
+        //   padding: EdgeInsets.fromLTRB(
+        //     0,
+        //     MediaQuery.of(context).size.height * 0.1,
+        //     23,
+        //     0,
+        //   ),
+        //   margin: EdgeInsets.zero,
+        //   child: Text(
+        //     "History",
+        //     style: Theme.of(context).textTheme.headline2,
+        //   ),
+        // ),
+        TopNavBar(header: "History"),
         RefreshIndicator(
           onRefresh: () => _refreshEvents(context),
           child: Container(
