@@ -10,25 +10,62 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                "Welcome to Konseki",
-                style: Theme.of(context).textTheme.headline1,
+        child: Stack(
+          children: [
+            Positioned(
+              top: -screenSize.height * 0.1,
+              left: -88,
+              child: Container(
+                height: 280,
+                width: 550,
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(227, 242, 253, 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.elliptical(550, 280),
+                  ),
+                ),
+                child: const Text('     '),
               ),
-              const SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: screenSize.height,
+              width: screenSize.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: screenSize.height * 0.15,
+                    ),
+                    Text(
+                      "Konseki",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .apply(color: Colors.blue, fontWeightDelta: 300),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    Text(
+                      "Welcome back",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const AuthCard(),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                  ],
+                ),
               ),
-              const AuthCard(),
-              const SizedBox(
-                height: 40,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -153,29 +190,6 @@ class _AuthCardState extends State<AuthCard> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                if (_authMode == AuthMode.signup)
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (val) {
-                      if (val == null) {
-                        return 'Name is required';
-                      }
-                      if (val.isEmpty) {
-                        return 'Name is required';
-                      }
-
-                      return null;
-                    },
-                    onSaved: (val) {
-                      if (val == null) {
-                        return;
-                      }
-                      _authData['name'] = val;
-                    },
-                  ),
                 TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Email',
@@ -235,6 +249,29 @@ class _AuthCardState extends State<AuthCard> {
                             return null;
                           }
                         : null,
+                  ),
+                if (_authMode == AuthMode.signup)
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (val) {
+                      if (val == null) {
+                        return 'Name is required';
+                      }
+                      if (val.isEmpty) {
+                        return 'Name is required';
+                      }
+
+                      return null;
+                    },
+                    onSaved: (val) {
+                      if (val == null) {
+                        return;
+                      }
+                      _authData['name'] = val;
+                    },
                   ),
                 const SizedBox(
                   height: 20,

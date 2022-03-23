@@ -28,8 +28,6 @@ class _NewEventState extends State<NewEvent> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
         onPressed: () async {
-          // check if api success
-          // use the return value
           var result = await _submit();
           Navigator.of(context).push(
             MaterialPageRoute(

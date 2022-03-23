@@ -32,20 +32,6 @@ class _HistoryState extends State<History> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Container(
-        //   height: MediaQuery.of(context).size.height * 0.15,
-        //   padding: EdgeInsets.fromLTRB(
-        //     0,
-        //     MediaQuery.of(context).size.height * 0.1,
-        //     23,
-        //     0,
-        //   ),
-        //   margin: EdgeInsets.zero,
-        //   child: Text(
-        //     "History",
-        //     style: Theme.of(context).textTheme.headline2,
-        //   ),
-        // ),
         TopNavBar(header: "History"),
         RefreshIndicator(
           onRefresh: () => _refreshEvents(context),

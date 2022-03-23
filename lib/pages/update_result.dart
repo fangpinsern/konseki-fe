@@ -12,21 +12,23 @@ class UpdateResult extends StatefulWidget {
   State<UpdateResult> createState() => _UpdateResultState();
 }
 
+enum ChoiceSelection { nonSelect, negativeSelect, positiveSelect }
+
 class _UpdateResultState extends State<UpdateResult> {
   var formChoices = {
-    0: {
+    ChoiceSelection.nonSelect: {
       "bgColorNegative": MaterialStateProperty.all(Colors.transparent),
       "fgColorNegative": MaterialStateProperty.all(Colors.blue),
       "bgColorPositive": MaterialStateProperty.all(Colors.transparent),
       "fgColorPositive": MaterialStateProperty.all(Colors.red),
     },
-    1: {
+    ChoiceSelection.negativeSelect: {
       "bgColorNegative": MaterialStateProperty.all(Colors.blue),
       "fgColorNegative": MaterialStateProperty.all(Colors.white),
       "bgColorPositive": MaterialStateProperty.all(Colors.transparent),
       "fgColorPositive": MaterialStateProperty.all(Colors.red),
     },
-    2: {
+    ChoiceSelection.positiveSelect: {
       "bgColorNegative": MaterialStateProperty.all(Colors.transparent),
       "fgColorNegative": MaterialStateProperty.all(Colors.blue),
       "bgColorPositive": MaterialStateProperty.all(Colors.red),
@@ -34,13 +36,7 @@ class _UpdateResultState extends State<UpdateResult> {
     },
   };
 
-  final choiceMap = {
-    0: "",
-    1: "negaitve",
-    2: "positive",
-  };
-
-  var chosenNumber = 0;
+  ChoiceSelection chosenNumber = ChoiceSelection.nonSelect;
 
   void _confirmation(BuildContext ctx) {
     showDialog(
@@ -69,7 +65,9 @@ class _UpdateResultState extends State<UpdateResult> {
               onPressed: () async {
                 final isSuccess =
                     await Provider.of<Events>(context, listen: false)
-                        .updateStatus(chosenNumber == 2, DateTime.now());
+                        .updateStatus(
+                            chosenNumber == ChoiceSelection.positiveSelect,
+                            DateTime.now());
                 if (isSuccess) {
                   // should change to success failure page
                   Navigator.of(context).push(MaterialPageRoute(
@@ -94,7 +92,7 @@ class _UpdateResultState extends State<UpdateResult> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
-        onPressed: chosenNumber == 0
+        onPressed: chosenNumber == ChoiceSelection.nonSelect
             ? null
             : () {
                 _confirmation(context);
@@ -114,7 +112,6 @@ class _UpdateResultState extends State<UpdateResult> {
       ),
       body: Center(
         child: Container(
-          // width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
@@ -156,7 +153,10 @@ class _UpdateResultState extends State<UpdateResult> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            chosenNumber = chosenNumber != 1 ? 1 : 0;
+                            chosenNumber =
+                                chosenNumber != ChoiceSelection.negativeSelect
+                                    ? ChoiceSelection.negativeSelect
+                                    : ChoiceSelection.nonSelect;
                           });
                         },
                         child: Container(
@@ -187,14 +187,13 @@ class _UpdateResultState extends State<UpdateResult> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            chosenNumber = chosenNumber != 2 ? 2 : 0;
+                            chosenNumber =
+                                chosenNumber != ChoiceSelection.positiveSelect
+                                    ? ChoiceSelection.positiveSelect
+                                    : ChoiceSelection.nonSelect;
                           });
                         },
                         child: Container(
-                          // width: MediaQuery.of(context).size.width * 0.9 * 0.3,
-                          // constraints: BoxConstraints(
-                          //   minWidth: 10,
-                          // ),
                           height: 48,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
